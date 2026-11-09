@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white;
+  }
+}
+
+/* Print specific styles for academic question paper */
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 12pt !important;
+  }
+
+  /* Hide header, navigation, form controls, and action buttons */
+  .no-print, header, nav, button, input, select, textarea, .file-upload-zone, .status-bar {
+    display: none !important;
+  }
+
+  /* Expand print paper container */
+  .print-paper-container {
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0.5in !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .print-paper-container * {
+    color: #000000 !important;
+  }
+
+  /* M1 fix: answer key prints when toggled on (was hidden by .no-print before) */
+  .answer-key {
+    display: block !important;
+    border: 1px solid #000 !important;
+    background: #fff !important;
+  }
+
+  /* Symbiosis header: keep each bordered block together on A4, never split boxes */
+  .exam-header > div,
+  .exam-header > p {
+    break-inside: avoid;
+  }
+
+  /* Academic sheet typography */
+  .exam-header,
+  .print-paper-container {
+    font-family: 'Times New Roman', Times, serif !important;
+    color: #000 !important;
+  }
+
+  /* Running print footer (screen-hidden): institute left, Page X of Y right */
+  .print-footer {
+    display: flex !important;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 9pt;
+    color: #000;
+    border-top: 1px solid #000;
+    padding: 4pt 0 0 0;
+    background: #fff;
+  }
+
+  .print-footer .page-counter::after {
+    content: 'Page ' counter(page) ' of ' counter(pages);
+  }
+}
+
+/* Screen: print footer never shown in the app UI */
+.print-footer {
+  display: none;
+}
+
+.page-break {
+  page-break-before: always;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
